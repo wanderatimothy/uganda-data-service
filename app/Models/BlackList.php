@@ -15,4 +15,5 @@ class BlackList extends Model
         'extra' => 'array'
     ];
     
+    
 }
