@@ -13,4 +13,10 @@ class Country extends Model
         'name',
         'code'
     ];
+
+
+    public function districts(){
+
+        return $this->hasMany(District::class, "country_id" , "id");
+    }
 }
