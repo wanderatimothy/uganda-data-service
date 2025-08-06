@@ -25,7 +25,6 @@ class CountrySeeder extends Seeder
                 'updated_at' => now()->format('Y-m-d h:i:s')
             ];
         },$data);
-        // print_r($data);
         DB::table('countries')
         ->insert($data);
     }
