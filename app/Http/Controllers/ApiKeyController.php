@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ApiKey;
 use Illuminate\Http\Request;
+use Spatie\Crypto\Rsa\KeyPair;
 
 class ApiKeyController extends Controller
 {
@@ -28,7 +29,26 @@ class ApiKeyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = validator()->make($request->all(),[
+            'name' => 'required|max:255|min:2',
+            'expiry' => 'required'
+        ]);
+
+        if($validation->fails()){
+            return $this->api_error_response($validation->errors(),"invalid data");
+        }
+
+        $secret = $request->user()->secret;
+
+        [$passwordProtectedPrivateKey, $publicKey] = (new KeyPair())->password($secret)->generate();
+
+        $apiKey = new ApiKey();
+        
+        $apiKey->user_id =  $request->user()->id;
+
+
+
+
     }
 
     /**
